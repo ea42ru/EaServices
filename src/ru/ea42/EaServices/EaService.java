@@ -13,7 +13,7 @@ public abstract class EaService implements EaTimer.CallBack {
 
     protected State state = State.STOP;
     protected EaTimer timer;
-    public App app;
+    protected App app;
 
     public EaService(App app) {
         super();
@@ -21,7 +21,7 @@ public abstract class EaService implements EaTimer.CallBack {
         app.addService(this);
     }
 
-    protected void imWorking() {
+    public void imWorking() {
     }
 
     public State getState() {

@@ -37,6 +37,7 @@ public class App {
         state = State.STOPED;
         srv.finit();
         state = State.STOP;
+        srv = null;
     }
 
 }
