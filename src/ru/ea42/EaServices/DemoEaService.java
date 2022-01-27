@@ -4,9 +4,10 @@ public class DemoEaService {
     public static App app;
 
     public static void main(String[] args) throws InterruptedException {
-        app = new App();
-        DemoWork work = new DemoWork(app);
-        DemoMonitor mon = new DemoMonitor(app);
+        DemoWork work = new DemoWork();
+        app = new App(work);
+        DemoMonitor mon = new DemoMonitor();
+        mon.app = app;
         oneDemo2S();
 
         System.out.println("1 Init");

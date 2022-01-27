@@ -1,16 +1,12 @@
 package ru.ea42.EaServices;
 
 public class DemoWork extends EaService {
-    int count = 0;
-
-    public DemoWork(App app) {
-        super(app);
-    }
+    private int count = 0;
 
     @Override
     protected void init() {
         oneDemoS();
-        timer = new EaTimer(this, 200);
+        timer.init(this, 200);
     }
 
     @Override

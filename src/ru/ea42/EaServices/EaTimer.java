@@ -4,6 +4,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class EaTimer extends Thread {
     public interface CallBack {
+        EaTimer timer = new EaTimer();
+
         void go();
     }
 
@@ -13,13 +15,24 @@ public class EaTimer extends Thread {
     private AtomicBoolean inWorks = new AtomicBoolean(false);
     private AtomicBoolean pause = new AtomicBoolean(true);
 
-    public EaTimer(CallBack goObj, int timeMs) {
-        super();
+    public void init(CallBack goObj, int timeMs) {
+        init(goObj, timeMs, true);
+    }
+
+    public void init(CallBack goObj, int timeMs, boolean paused) {
         call = goObj;
         sleepMs = timeMs;
         on.set(true);
-        pause.set(true);
+        pause.set(paused);
         this.start();
+    }
+
+    public void finit() {
+        on.set(false);
+        while (inWorks.get()) oneMs();
+        // this.interrupt();
+        //this.stop();
+        call = null;
     }
 
     public void on() {
@@ -43,14 +56,6 @@ public class EaTimer extends Thread {
             }
         }
         inWorks.set(false);
-    }
-
-    public void finit() {
-        on.set(false);
-        while (inWorks.get()) oneMs();
-        // this.interrupt();
-        //this.stop();
-        call = null;
     }
 
     private void oneMs() {
