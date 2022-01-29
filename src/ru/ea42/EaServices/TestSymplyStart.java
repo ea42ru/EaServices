@@ -1,7 +1,7 @@
 package ru.ea42.EaServices;
 
-public class Start {
-    public static EaSimplyService sSrv = new StartApp("EaServices v0.01");
+public class TestSymplyStart {
+    public static EaSimplyService sSrv = new TestSimplyWork("TEST v1.00");
 
     // создание из командной строки
     public static void main(String[] args) {

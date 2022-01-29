@@ -1,9 +1,10 @@
 package ru.ea42.EaServices;
 
-public class DemoMonitor implements EaTimer.CallBack {
-    public App app;
+public class Test_Monitor implements EaTimer.CallBack {
+    private App app;
 
-    public DemoMonitor() {
+    public Test_Monitor(App app) {
+        this.app = app;
         timer.init(this, 300, false);
     }
 
@@ -15,5 +16,4 @@ public class DemoMonitor implements EaTimer.CallBack {
     public void go() {
         System.out.println("mon. state -> " + app.state);
     }
-
 }

@@ -18,6 +18,12 @@ public abstract class EaService implements EaTimer.CallBack {
     }
 
     public State getState() {
-        return state;
+        synchronized (this) {
+            return state;
+        }
+    }
+
+    public void log(String mes) {
+        app.log(mes);
     }
 }

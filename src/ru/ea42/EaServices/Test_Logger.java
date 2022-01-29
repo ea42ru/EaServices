@@ -2,12 +2,13 @@ package ru.ea42.EaServices;
 
 import java.io.FileWriter;
 
-public class Logger {
-    FileWriter writer;
-    boolean file = false;
+public class Test_Logger implements ILog{
+    private FileWriter writer;
+    boolean writeFile;
 
-    public Logger() {
-        if (file) {
+    public Test_Logger(boolean writeFile) {
+        this.writeFile=writeFile;
+        if (writeFile) {
             try {
                 writer = new FileWriter("stdOut.txt", false);
             } catch (Exception ignore) {
@@ -17,7 +18,7 @@ public class Logger {
 
     private void println(String mes) {
         System.err.println(mes);
-        if (file) {
+        if (writeFile) {
             try {
                 writer.write(mes);
                 writer.flush();
@@ -32,10 +33,6 @@ public class Logger {
 
     public void info(String mes) {
         println("info: " + mes);
-    }
-
-    public void mes(String mes) {
-        println(mes);
     }
 
     public void version() {
@@ -54,5 +51,10 @@ public class Logger {
         println("memory total: " + (totalMemory / 1048576) + " Mb");
         println("memory free: " + (freeMemory / 1048576) + " Mb");
         println("memory used: " + (usedMemory / 1048576) + " Mb");
+    }
+
+    @Override
+    public void log(String mes) {
+        println(mes);
     }
 }

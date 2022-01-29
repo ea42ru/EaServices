@@ -1,3 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: ru.ea42.EaServices.EngineLauncher
-Class-Path: .

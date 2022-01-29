@@ -1,13 +1,13 @@
 package ru.ea42.EaServices;
 
-public class DemoEaService {
+public class Test_Start {
     public static App app;
 
-    public static void main(String[] args) throws InterruptedException {
-        DemoWork work = new DemoWork();
-        app = new App(work);
-        DemoMonitor mon = new DemoMonitor();
-        mon.app = app;
+    public static void main(String[] args) {
+        Test_Work work = new Test_Work();
+        app = new App(null);
+        app.addService(work);
+        Test_Monitor mon = new Test_Monitor(app);
         oneDemo2S();
 
         System.out.println("1 Init");
