@@ -7,9 +7,9 @@ public class Test_Work extends EaService {
     @Override
     protected void init() {
         oneDemoS();
+        name = "Test EaServices v0.03";
         app.setLoger(new Test_Logger(true));
-        log("on new Logger");
-        timer.init(this, 2000);
+        setTimer(2000);
     }
 
     // разрешение выполнять работу
@@ -31,13 +31,14 @@ public class Test_Work extends EaService {
     protected void finit() {
         oneDemoS();
         timer.finit();
+        timer=null;
     }
 
     // квант полезной работы,  вызов от таймера, timer
     @Override
     public void go() {
         count++;
-        System.out.println("<== " + count + " ==>");
+        log("<== " + count + " ==>");
     }
 
     private void oneDemoS() {

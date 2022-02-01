@@ -1,20 +1,46 @@
 package ru.ea42.EaServices;
 
-public class Start {
-    public static EaSimplyService sSrv = new StartApp("EaServices v0.01");
+import java.util.Scanner;
+
+public class Start implements ShutdownHook.CallBack {
+    public static App sApp;
 
     // создание из командной строки
     public static void main(String[] args) {
-        sSrv.cmd();
+        init();
+        System.out.println("Service " + sApp.name + " start.");
+        System.out.println("Enter 'stop' to halt.");
+        Scanner sc = new Scanner(System.in);
+        while (!sc.nextLine().toLowerCase().equals("stop")) ;
+        System.out.println("Service " + sApp.name + " stop");
+        System.exit(0);
+    }
+
+    // окончание работы из командной строки
+    @Override
+    public void terminate() {
+        finit();
     }
 
     // создание из prunsrv.exe
     public static void start(String[] args) {
-        sSrv.start();
+        finit();
     }
 
     // окончание работы из prunsrv.exe
     public static void stop(String[] args) {
-        sSrv.stop();
+        finit();
+    }
+
+    public static void init() {
+        sApp = new SingleApp();
+        // суда нужно класс поиском по имени....
+        sApp.setMainService(new Test_Work());
+        sApp.initApp();
+    }
+
+    public static void finit() {
+        sApp.finitApp();
+        sApp=null;
     }
 }

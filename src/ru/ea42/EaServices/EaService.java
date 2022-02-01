@@ -1,6 +1,11 @@
 package ru.ea42.EaServices;
 
 public abstract class EaService implements EaTimer.CallBack {
+    public String name = "Service";
+    protected EaTimer timer = null;
+    public App app = null;
+    protected State state = State.STOP;
+
     protected abstract void init();
 
     protected abstract void start();
@@ -11,10 +16,13 @@ public abstract class EaService implements EaTimer.CallBack {
 
     public abstract void go();
 
-    protected State state = State.STOP;
-    public App app;
+    protected void setTimer(int timeMs, boolean paused) {
+        if (timer == null) timer = new EaTimer();
+        timer.init(this, timeMs, paused);
+    }
 
-    public void imWorking() {
+    protected void setTimer(int timeMs) {
+        setTimer(timeMs,true);
     }
 
     public State getState() {
