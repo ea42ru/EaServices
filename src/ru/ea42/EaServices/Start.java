@@ -1,5 +1,7 @@
 package ru.ea42.EaServices;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class Start implements ShutdownHook.CallBack {
@@ -33,14 +35,46 @@ public class Start implements ShutdownHook.CallBack {
     }
 
     public static void init() {
+        String nameMainServClass = null;
+        try {
+            Start st = null;
+            InputStream jsFS = st.getClass().getClassLoader().getResourceAsStream("mainService.ini");
+            if (jsFS != null) {
+                int ch;
+                ByteArrayOutputStream sb = new ByteArrayOutputStream();
+                while ((ch = jsFS.read()) != -1) sb.write(ch);
+                nameMainServClass = sb.toString("UTF8");
+                jsFS.close();
+            }
+        } catch (Exception ignore) {
+        }
+
+        EaService mainSrv = null;
+        if (nameMainServClass != null) {
+            Class cl = null;
+            try {
+                cl = Class.forName("class " + nameMainServClass);
+            } catch (Exception ignore) {
+            }
+
+            if (cl != null) {
+                try {
+                    mainSrv = (EaService) cl.newInstance();
+                } catch (Exception ignore) {
+                }
+            }
+        }
+
+        // если не нашли класса из файла "mainService.ini", то запускаем тестовый класс
+        // ??? или лучше по имени класса ru.ea42.EaServices.StartSingleService
+        if (mainSrv == null) mainSrv = new Test_Work();
         sApp = new SingleApp();
-        // суда нужно класс поиском по имени....
-        sApp.setMainService(new Test_Work());
+        sApp.setMainService(mainSrv);
         sApp.initApp();
     }
 
     public static void finit() {
         sApp.finitApp();
-        sApp=null;
+        sApp = null;
     }
 }

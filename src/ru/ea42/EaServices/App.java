@@ -21,9 +21,11 @@ public class App {
     }
 
     public void setMainService(EaService srv) {
-        this.mainSrv = srv;
-        srv.app = this;
-        name=srv.name;
+        if (srv != null) {
+            this.mainSrv = srv;
+            srv.app = this;
+            name = srv.name;
+        }
     }
 
     public void addService(EaService srv) {
